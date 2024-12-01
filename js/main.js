@@ -1,5 +1,6 @@
-  /*----- constants -----*/
-
+ /*----- constants -----*/
+ const MAX_GUESSES = 6
+ const SONG_LYRICS = []
 
   /*----- state variables -----*/
 

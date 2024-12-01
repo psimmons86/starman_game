@@ -3,15 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <title>STARMAN: The Lyrics Game</title>
+    <link rel="stylesheet" href="css/main.css" />
     <script defer src="js/main.js"></script>
-    <script src="css/main.css"></script>
   </head>
   <body>
-    <h1 class="game-title">STARMAN</h1>
-    <img src="images/alien.png" alt="Star-Man Game Scene" class="game-image" />
-    <button class="guess-button" id="guessButton">Enter Guess</button>
-
+    <div class="game-container">
+      <h1 class="game-title">STARMAN</h1>
+      <img
+        src="images/alien.png"
+        alt="Star-Man Game Scene"
+        class="game-image"
+      />
+      <div class="game-info">
+        <div class="song-info"></div>
+        <div class="hint-display"></div>
+        <div class="word-display"></div>
+      </div>
+      <button class="guess-button" id="guessButton">Enter Guess</button>
       <div class="letter-grid" id="letterGrid">
         <div class="letter-box">A</div>
         <div class="letter-box">B</div>
@@ -39,5 +48,7 @@
         <div class="letter-box">X</div>
         <div class="letter-box">Y</div>
         <div class="letter-box">Z</div>
+      </div>
+    </div>
   </body>
 </html>
