@@ -41,7 +41,20 @@
     min-height: 50px;
 }
 
- .guess-button {
+.song-info {
+  font-size: 1.2rem;
+  color: #5DC8FA;
+  margin-bottom: 10px;
+}
+
+.hint-display {
+  background-color: rgba(93, 200, 250, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+.guess-button {
     background-color: #5DC8FA;
     color: white;
     border: none;

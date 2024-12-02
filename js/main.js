@@ -79,7 +79,25 @@ guessButton.addEventListener('click', init)
     gameStarted = true
 
     guessButton.textContent = ''
+
+    letterBoxes.forEach(box => {
+        box.classList.remove('correct', 'incorrect')
+        box.style.pointerEvents = 'auto'
+    })
+
+    songInfoDisplay.textContent = `${randomSong.artist} - ${randomSong.song}`
+    hintDisplay.textContent = randomSong.hint
+    createWordDisplay()
   }
 
-  
+  function createWordDisplay() {
+    wordDisplay.innerHTML = ''
+    currentWord.split('').forEach(letter => {
+        const letterSlot = document.createElement('span')
+        letterSlot.className = 'letter-slot'
+        letterSlot.textContent = letter === ' ' ? ' ' : '_'
+        letterSlot.dataset.letter = letter
+        wordDisplay.appendChild(letterSlot)
+    });
+}
 
