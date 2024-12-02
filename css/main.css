@@ -13,19 +13,19 @@
     color: white;
 }
 
-  .game-container {
+ .game-container {
     max-width: 800px;
     width: 100%;
     text-align: center;
 }
-  .game-title {
+ .game-title {
     font-size: 2.5rem;
     margin-bottom: 20px;
     letter-spacing: 4px;
     color: #5DC8FA;
 }
 
-.game-image {
+ .game-image {
     width: 100%;
     max-width: 600px;
     height: auto;
@@ -33,7 +33,7 @@
     margin-bottom: 20px;
 }
 
-.word-display {
+ .word-display {
     display: flex;
     justify-content: center;
     gap: 10px;
@@ -41,7 +41,7 @@
     min-height: 50px;
 }
 
-.guess-button {
+ .guess-button {
     background-color: #5DC8FA;
     color: white;
     border: none;
@@ -51,4 +51,25 @@
     cursor: pointer;
     margin-bottom: 20px;
     transition: background-color 0.3s;
+}
+
+.letter-grid {
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 5px;
+  margin: 20px auto;
+  max-width: 700px;
+}
+
+.letter-box {
+  background-color: #FF69B4;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
 }
