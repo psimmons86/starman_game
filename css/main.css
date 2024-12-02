@@ -32,3 +32,23 @@
     border-radius: 10px;
     margin-bottom: 20px;
 }
+
+.word-display {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+    min-height: 50px;
+}
+
+.guess-button {
+    background-color: #5DC8FA;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.5rem;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
