@@ -151,3 +151,29 @@ function render() {
         messageDisplay.classList.remove('show', 'win', 'lose')
     }
 }
+function showMessage(text, isWin) {
+    messageDisplay.textContent = text
+    messageDisplay.classList.add('show')
+    messageDisplay.classList.add(isWin ? 'win' : 'lose')
+
+    setTimeout(() => {
+        if (confirm('Play again?')) {
+            messageDisplay.classList.remove('show', 'win', 'lose')
+            init()
+        }
+    }, 2000)
+}
+
+function checkGameEnd() {
+    if (hasWon()) {
+        showMessage(`You won! The lyrics were: "${currentWord}"`, true)
+    } else if (wrongGuesses >= maxGuesses) {
+        showMessage(`Fail! The lyrics were: "${currentWord}"`, false)
+    }
+}
+
+function hasWon() {
+    return [...currentWord].every(letter => 
+        letter === ' ' || guessedLetters.has(letter)
+    )
+}
