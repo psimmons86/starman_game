@@ -150,6 +150,7 @@ function render() {
     if (gameStarted) {
         messageDisplay.classList.remove('show', 'win', 'lose')
     }
+    updateGameImage()
 }
 function showMessage(text, isWin) {
     messageDisplay.textContent = text
@@ -176,4 +177,10 @@ function hasWon() {
     return [...currentWord].every(letter => 
         letter === ' ' || guessedLetters.has(letter)
     )
+}
+
+function updateGameImage() {
+    const personImage = document.querySelector('.game-image.person')
+    const opacity = 1 - (wrongGuesses / maxGuesses)
+    personImage.style.opacity = opacity
 }
