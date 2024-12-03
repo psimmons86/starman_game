@@ -122,7 +122,32 @@
         console.log('Wrong guesses:', wrongGuesses)
     }
     
-   // render()
-   // checkGameEnd()
+    render()
+    checkGameEnd()
 }
- 
+
+function render() {
+    guessButton.textContent = gameStarted ? 'Playing...' : 'Start Game'
+    songInfoDisplay.textContent = currentSong ? `${currentSong.artist} - ${currentSong.song}` : ''
+    hintDisplay.textContent = currentSong ? currentSong.hint : ''
+    
+    document.querySelectorAll('.letter-slot').forEach(slot => {
+        if (guessedLetters.has(slot.dataset.letter) || slot.dataset.letter === ' ') {
+            slot.textContent = slot.dataset.letter
+        }
+    })
+    
+    letterBoxes.forEach(box => {
+        const letter = box.textContent
+        box.classList.remove('correct', 'incorrect')
+        if (guessedLetters.has(letter)) {
+            box.classList.add(currentWord.includes(letter) ? 'correct' : 'incorrect')
+            box.style.pointerEvents = 'none'
+        } else {
+            box.style.pointerEvents = gameStarted ? 'auto' : 'none'
+        }
+    })
+    if (gameStarted) {
+        messageDisplay.classList.remove('show', 'win', 'lose')
+    }
+}
