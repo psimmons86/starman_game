@@ -56,6 +56,7 @@
   let guessedLetters = []
   let wrongGuesses = 0
   let gameStarted = false
+  let currentSong = null
    /*----- cached elements  -----*/
   const letterBoxes = document.querySelectorAll('.letter-box')
   const guessButton = document.getElementById('guessButton')
@@ -64,16 +65,20 @@
   const hintDisplay = document.querySelector('.hint-display')
   const wordDisplay = document.querySelector('.word-display')
   const messageDisplay = document.querySelector('.message-display')
+  const backgroundMusic = document.getElementById('backgroundMusic')
  
    /*----- event listeners -----*/
  
  guessButton.addEventListener('click', init)
  letterBoxes.forEach(box => {
-     box.addEventListener('click', () => handleLetterClick(box.textContent, box));
+     box.addEventListener('click', () => handleLetterClick(box.textContent, box))
  })
  
    /*----- functions -----*/
    function init() {
+    backgroundMusic.volume = 0.3
+    backgroundMusic.play()
+        .catch(error => console.log('Audio play failed:', error))
      const randomSong = songLyrics[Math.floor(Math.random() * songLyrics.length)]
      currentWord = randomSong.lyric
  
@@ -101,15 +106,23 @@
          letterSlot.textContent = letter === ' ' ? ' ' : '_'
          letterSlot.dataset.letter = letter
          wordDisplay.appendChild(letterSlot)
-     });
+     })
  }
  
- function updateWordDisplay() {
-     const slots = document.querySelectorAll('.letter-slot');
-     slots.forEach(slot => {
-         if (guessedLetters.has(slot.dataset.letter)) {
-             slot.textContent = slot.dataset.letter;
-         }
-     });
- }
+ function handleLetterClick(letter, letterBox) {
+    if (!gameStarted || guessedLetters.has(letter)) {
+        return
+    }
+
+    console.log('Letter clicked:', letter)
+    guessedLetters.add(letter)
+    
+    if (!currentWord.includes(letter)) {
+        wrongGuesses++
+        console.log('Wrong guesses:', wrongGuesses)
+    }
+    
+   // render()
+   // checkGameEnd()
+}
  
