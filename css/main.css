@@ -86,3 +86,13 @@
   justify-content: center;
   transition: all 0.3s ease;
 }
+
+.letter-box.correct {
+  background-color: #44FF44;
+  pointer-events: none;
+}
+
+.letter-box.incorrect {
+  background-color: #FF4444;
+  pointer-events: none;
+}

@@ -67,7 +67,9 @@ const songLyrics = [
   /*----- event listeners -----*/
 
 guessButton.addEventListener('click', init)
-
+letterBoxes.forEach(box => {
+    box.addEventListener('click', () => handleLetterClick(box.textContent, box));
+})
 
   /*----- functions -----*/
   function init() {
@@ -98,6 +100,15 @@ guessButton.addEventListener('click', init)
         letterSlot.textContent = letter === ' ' ? ' ' : '_'
         letterSlot.dataset.letter = letter
         wordDisplay.appendChild(letterSlot)
+    });
+}
+
+function updateWordDisplay() {
+    const slots = document.querySelectorAll('.letter-slot');
+    slots.forEach(slot => {
+        if (guessedLetters.has(slot.dataset.letter)) {
+            slot.textContent = slot.dataset.letter;
+        }
     });
 }
 
