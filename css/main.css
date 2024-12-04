@@ -189,3 +189,9 @@ body {
           4px 4px rgba(93, 200, 250, 0.5);
   }
 }
+.score-display {
+  font-size: 1.2rem
+  color: #5DC8FA
+  margin: 10px 0
+  font-family: 'VT323', monospace
+}

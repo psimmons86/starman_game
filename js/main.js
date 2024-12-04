@@ -1,194 +1,187 @@
- /*----- constants -----*/
- const maxGuesses = 4
- const songLyrics = [
+/*----- constants -----*/
+const maxGuesses = 6
+const songLyrics = [
    {
        artist: "David Bowie",
        song: "Space Oddity",
        lyric: "GROUND CONTROL TO MAJOR TOM",
-       hint: "🎵 ___ ___ ___ ___ ___...\nThe first line of this iconic space song"
+       hint: "🎵 The first line of this iconic space song"
    },
    {
        artist: "David Bowie",
        song: "Starman",
        lyric: "WAITING IN THE SKY",
-       hint: "🎵 There's a starman ___ ___ ___ ___\nHe'd like to come and meet us"
+       hint: "🎵 There's a starman..."
    },
    {
        artist: "David Bowie",
        song: "Life on Mars",
        lyric: "IS THERE LIFE ON MARS",
-       hint: "🎵 ___ ___ ___ ___ ___\nThe question that gives this song its title"
+       hint: "🎵 The iconic question that titles this song"
    },
    {
        artist: "David Bowie",
        song: "Heroes",
        lyric: "WE CAN BE HEROES",
-       hint: "🎵 ___ ___ ___ ___\nJust for one day"
-   },
-   {
-       artist: "David Bowie",
-       song: "Changes",
-       lyric: "TIME MAY CHANGE ME",
-       hint: "🎵 ___ ___ ___ ___\nBut I can't trace time"
-   },
-   {
-       artist: "David Bowie",
-       song: "Let's Dance",
-       lyric: "LETS SWAY WHILE COLOR LIGHTS UP YOUR FACE",
-       hint: "🎵 ___ ___ ___ ___ ___ ___ ___ ___\nUnder the moonlight"
-   },
-   {
-       artist: "David Bowie",
-       song: "Modern Love",
-       lyric: "I KNOW WHEN TO GO OUT",
-       hint: "🎵 ___ ___ ___ ___ ___ ___\nAnd when to stay in"
+       hint: "🎵 Just for one day"
    },
    {
        artist: "David Bowie",
        song: "Ashes to Ashes",
        lyric: "ASHES TO ASHES FUNK TO FUNKY",
-       hint: "🎵 ___ ___ ___ ___ ___ ___\nWe know Major Tom's a junkie"
+       hint: "🎵 We know Major Tom's a junkie"
    }
- ]
- 
-   /*----- state variables -----*/
-  let currentWord = ''
-  let guessedLetters = []
-  let wrongGuesses = 0
-  let gameStarted = false
-  let currentSong = null
-   /*----- cached elements  -----*/
-  const letterBoxes = document.querySelectorAll('.letter-box')
-  const guessButton = document.getElementById('guessButton')
-  const gameImage = document.querySelector('.game-image')
-  const songInfoDisplay = document.querySelector('.song-info')
-  const hintDisplay = document.querySelector('.hint-display')
-  const wordDisplay = document.querySelector('.word-display')
-  const messageDisplay = document.querySelector('.message-display')
-  const backgroundMusic = document.getElementById('backgroundMusic')
- 
-   /*----- event listeners -----*/
- 
- guessButton.addEventListener('click', init)
- letterBoxes.forEach(box => {
-     box.addEventListener('click', () => handleLetterClick(box.textContent, box))
- })
- 
-   /*----- functions -----*/
-   function init() {
-    backgroundMusic.volume = 0.3
-    backgroundMusic.play()
-        .catch(error => console.log('Audio play failed:', error))
-     const randomSong = songLyrics[Math.floor(Math.random() * songLyrics.length)]
-     currentWord = randomSong.lyric
+]
 
-     guessButton.style.display = 'none';
-     guessButton.classList.remove('win', 'lose')
-     guessedLetters = new Set()
-     wrongGuesses = 0
-     gameStarted = true
- 
-     guessButton.textContent = ''
- 
-     letterBoxes.forEach(box => {
-         box.classList.remove('correct', 'incorrect')
-         box.style.pointerEvents = 'auto'
-     })
- 
-     songInfoDisplay.textContent = `${randomSong.artist} - ${randomSong.song}`
-     hintDisplay.textContent = randomSong.hint
-     createWordDisplay()
+/*----- state variables -----*/
+let currentWord = ''
+let guessedLetters = new Set()
+let wrongGuesses = 0
+let gameStarted = false
+let currentSong = null
+let currentScore = 0
+let highScore = 0
+
+/*----- cached elements -----*/
+const letterBoxes = document.querySelectorAll('.letter-box')
+const guessButton = document.getElementById('guessButton')
+const gameImage = document.querySelector('.game-image')
+const songInfoDisplay = document.querySelector('.song-info')
+const hintDisplay = document.querySelector('.hint-display')
+const wordDisplay = document.querySelector('.word-display')
+const backgroundMusic = document.getElementById('backgroundMusic')
+const musicToggle = document.getElementById('musicToggle')
+
+/*----- event listeners -----*/
+guessButton.addEventListener('click', init)
+letterBoxes.forEach(box => {
+   box.addEventListener('click', () => handleLetterClick(box.textContent, box))
+})
+
+musicToggle.addEventListener('click', toggleMusic)
+
+/*----- functions -----*/
+function init() {
+   currentSong = songLyrics[Math.floor(Math.random() * songLyrics.length)]
+   currentWord = currentSong.lyric
+   guessedLetters = new Set()
+   wrongGuesses = 0
+   gameStarted = true
+   currentScore = 0
+   
+   guessButton.textContent = 'Playing...'
+   guessButton.classList.remove('win', 'lose')
+   
+   letterBoxes.forEach(box => {
+       box.classList.remove('correct', 'incorrect')
+       box.style.pointerEvents = 'auto'
+   })
+   
+   songInfoDisplay.textContent = `${currentSong.artist} - ${currentSong.song}`
+   hintDisplay.textContent = currentSong.hint
+   
+   document.getElementById('currentScore').textContent = currentScore
+   document.getElementById('highScore').textContent = highScore
+   
+   createWordDisplay()
+}
+
+function createWordDisplay() {
+   wordDisplay.innerHTML = ''
+   currentWord.split('').forEach(letter => {
+       const letterSlot = document.createElement('span')
+       letterSlot.className = 'letter-slot'
+       letterSlot.textContent = letter === ' ' ? ' ' : '_'
+       letterSlot.dataset.letter = letter
+       wordDisplay.appendChild(letterSlot)
+   })
+}
+
+function handleLetterClick(letter, letterBox) {
+   if (!gameStarted || guessedLetters.has(letter)) return
+   
+   guessedLetters.add(letter)
+   
+   if (currentWord.includes(letter)) {
+       letterBox.classList.add('correct')
+       updateScore(true)
+       updateWordDisplay()
+   } else {
+       wrongGuesses++
+       letterBox.classList.add('incorrect')
+       updateGameImage()
    }
- 
-   function createWordDisplay() {
-     wordDisplay.innerHTML = ''
-     currentWord.split('').forEach(letter => {
-         const letterSlot = document.createElement('span')
-         letterSlot.className = 'letter-slot'
-         letterSlot.textContent = letter === ' ' ? ' ' : '_'
-         letterSlot.dataset.letter = letter
-         wordDisplay.appendChild(letterSlot)
-     })
- }
- 
- function handleLetterClick(letter, letterBox) {
-    if (!gameStarted || guessedLetters.has(letter)) {
-        return
-    }
-
-    console.log('Letter clicked:', letter)
-    guessedLetters.add(letter)
-    
-    if (!currentWord.includes(letter)) {
-        wrongGuesses++
-        console.log('Wrong guesses:', wrongGuesses)
-    }
-    
-    render()
-    checkGameEnd()
+   
+   letterBox.style.pointerEvents = 'none'
+   checkGameEnd()
 }
 
-function render() {
-    guessButton.textContent = gameStarted ? 'Playing...' : 'Start Game'
-    songInfoDisplay.textContent = currentSong ? `${currentSong.artist} - ${currentSong.song}` : ''
-    hintDisplay.textContent = currentSong ? currentSong.hint : ''
-    
-    document.querySelectorAll('.letter-slot').forEach(slot => {
-        if (guessedLetters.has(slot.dataset.letter) || slot.dataset.letter === ' ') {
-            slot.textContent = slot.dataset.letter
-        }
-    })
-    
-    letterBoxes.forEach(box => {
-        const letter = box.textContent
-        box.classList.remove('correct', 'incorrect')
-        if (guessedLetters.has(letter)) {
-            box.classList.add(currentWord.includes(letter) ? 'correct' : 'incorrect')
-            box.style.pointerEvents = 'none'
-        } else {
-            box.style.pointerEvents = gameStarted ? 'auto' : 'none'
-        }
-    })
-    if (gameStarted) {
-        messageDisplay.classList.remove('show', 'win', 'lose')
-    }
-    updateGameImage()
-}
-function showMessage(text, isWin) {
-    messageDisplay.textContent = text
-    messageDisplay.classList.add('show')
-    messageDisplay.classList.add(isWin ? 'win' : 'lose')
-
-    setTimeout(() => {
-        if (confirm('Play again?')) {
-            messageDisplay.classList.remove('show', 'win', 'lose')
-            init()
-        }
-    }, 2000)
-}
-
-function checkGameEnd() {
-    if (hasWon()) {
-        guessButton.textContent = 'You saved them! Play Again?'
-        guessButton.style.display = 'block'
-        guessButton.classList.add('win')
-        gameStarted = false
-    } else if (wrongGuesses >= maxGuesses) {
-        guessButton.textContent = 'Abducted! Try Again?'
-        guessButton.style.display = 'block'
-        guessButton.classList.add('lose')
-        gameStarted = false
-    }
-}
-
-function hasWon() {
-    return [...currentWord].every(letter => 
-        letter === ' ' || guessedLetters.has(letter)
-    )
+function updateWordDisplay() {
+   const slots = document.querySelectorAll('.letter-slot')
+   slots.forEach(slot => {
+       if (guessedLetters.has(slot.dataset.letter)) {
+           slot.textContent = slot.dataset.letter
+       }
+   })
 }
 
 function updateGameImage() {
-    const personImage = document.querySelector('.game-image.person')
-    const opacity = 1 - (wrongGuesses / maxGuesses)
-    personImage.style.opacity = opacity
+   const brightness = 1 - (wrongGuesses * 0.15)
+   gameImage.style.filter = `brightness(${brightness})`
+   
+   if (wrongGuesses === maxGuesses) {
+       gameImage.style.transform = 'translateY(-20px)'
+       gameImage.style.opacity = '0.5'
+   }
 }
+
+function checkGameEnd() {
+   if (hasWon()) {
+       checkHighScore()
+       guessButton.textContent = 'You saved them! Play Again?'
+       guessButton.classList.add('win')
+       gameStarted = false
+   } else if (wrongGuesses >= maxGuesses) {
+       guessButton.textContent = 'They were abducted! Try Again?'
+       guessButton.classList.add('lose')
+       gameStarted = false
+   }
+}
+
+function hasWon() {
+   return [...currentWord].every(letter => 
+       letter === ' ' || guessedLetters.has(letter)
+   )
+}
+
+function updateScore(isCorrect) {
+   if (isCorrect) {
+       currentScore += 10
+   }
+   document.getElementById('currentScore').textContent = currentScore
+}
+
+function checkHighScore() {
+   if (currentScore > highScore) {
+       highScore = currentScore
+       document.getElementById('highScore').textContent = highScore
+   }
+}
+
+function toggleMusic() {
+   if (backgroundMusic.paused) {
+       backgroundMusic.volume = 0.3
+       backgroundMusic.play()
+       musicToggle.textContent = '🔊 Music On'
+       musicToggle.classList.add('playing')
+   } else {
+       backgroundMusic.pause()
+       musicToggle.textContent = '🔊 Music Off'
+       musicToggle.classList.remove('playing')
+   }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+   backgroundMusic.style.display = 'none'
+   render()
+})
