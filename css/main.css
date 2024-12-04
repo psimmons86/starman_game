@@ -1,36 +1,48 @@
 * {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0;
-    padding: 20px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: black;
-    font-family: Arial, sans-serif;
-    color: white;
+  box-sizing: border-box;
 }
 
- .game-container {
-    max-width: 600px;
-    width: 100%;
-    text-align: center;
+body {
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  font-family: Arial, sans-serif;
+  color: rgb(0, 0, 0);
 }
+
+.game-container {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+}
+
 .game-title {
   font-size: 3.5rem;
   margin-bottom: 20px;
   letter-spacing: 8px;
   font-weight: bold;
   color: #5DC8FA;
-  text-shadow: 
+  text-shadow:
       2px 2px #FF69B4,
       -2px -2px #FFD700,
       4px 4px rgba(93, 200, 250, 0.5);
   animation: psychedelic 3s infinite;
   font-family: 'Space Mono', monospace;
   text-transform: uppercase;
+}
+
+.scene-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  height: 300px;
+  margin-bottom: 15px;
 }
 
 .game-image {
@@ -52,21 +64,16 @@
   transition: opacity 0.5s ease;
 }
 
-.scene-container {
-  position: relative;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  height: 400px; 
-  margin-bottom: 20px;
+.game-info {
+  margin: 15px 0;
 }
 
- .word-display {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 20px 0;
-    min-height: 50px;
+.word-display {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px 0;
+  min-height: 40px;
 }
 
 .song-info {
@@ -77,35 +84,35 @@
 
 .hint-display {
   background-color: rgba(93, 200, 250, 0.1);
-  padding: 20px;
+  padding: 15px;
   border-radius: 10px;
-  margin: 0px 0;
+  margin: 10px 0;
 }
 
 .guess-button {
-    background-color: #5DC8FA;
-    color: white;
-    border: none;
-    padding: 15px 40px;
-    font-size: 1.5rem;
-    border-radius: 30px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    transition: background-color 0.3s;
+  background-color: #5DC8FA;
+  color: white;
+  border: none;
+  padding: 12px 35px;
+  font-size: 1.5rem;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: background-color 0.3s;
 }
 
 .letter-grid {
   display: grid;
   grid-template-columns: repeat(13, 1fr);
-  gap: 5px;
-  margin: 20px auto;
-  max-width: 700px;
+  gap: 4px;
+  margin: 15px auto;
+  max-width: 600px;
 }
 
 .letter-box {
   background-color: #FF69B4;
   color: white;
-  padding: 10px;
+  padding: 8px;
   border-radius: 5px;
   cursor: pointer;
   aspect-ratio: 1;
@@ -128,8 +135,8 @@
 .message-display {
   font-size: 1.5rem;
   color: #5DC8FA;
-  padding: 20px;
-  margin: 20px 0;
+  padding: 15px;
+  margin: 15px 0;
   border-radius: 10px;
   background-color: rgba(93, 200, 250, 0.1);
   opacity: 0;
@@ -140,35 +147,45 @@
   opacity: 1;
 }
 
+.guess-button.win {
+    background-color: #44FF44;
+    animation: glow 2s infinite;
+}
+
+.guess-button.lose {
+    background-color: #FF4444;
+    animation: glow 2s infinite;
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 5px currentColor; }
+    50% { box-shadow: 0 0 20px currentColor; }
+    100% { box-shadow: 0 0 5px currentColor; }
+}
+
 @keyframes psychedelic {
   0% {
-      text-shadow: 
+      text-shadow:
           2px 2px #FF69B4,
           -2px -2px #FFD700,
           4px 4px rgba(93, 200, 250, 0.5);
   }
   33% {
-      text-shadow: 
+      text-shadow:
           -2px 2px #FFD700,
           2px -2px #FF69B4,
           4px 4px rgba(93, 200, 250, 0.5);
   }
   66% {
-      text-shadow: 
+      text-shadow:
           2px -2px #5DC8FA,
           -2px 2px #FF69B4,
           4px 4px rgba(255, 215, 0, 0.5);
   }
   100% {
-      text-shadow: 
+      text-shadow:
           2px 2px #FF69B4,
           -2px -2px #FFD700,
           4px 4px rgba(93, 200, 250, 0.5);
   }
-}
-
-.game-title:hover {
-  animation: psychedelic 1s infinite;
-  transform: scale(1.05);
-  transition: transform 0.3s ease;
 }

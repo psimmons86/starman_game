@@ -1,5 +1,5 @@
  /*----- constants -----*/
- const maxGuesses = 6
+ const maxGuesses = 4
  const songLyrics = [
    {
        artist: "David Bowie",
@@ -81,7 +81,9 @@
         .catch(error => console.log('Audio play failed:', error))
      const randomSong = songLyrics[Math.floor(Math.random() * songLyrics.length)]
      currentWord = randomSong.lyric
- 
+
+     guessButton.style.display = 'none';
+     guessButton.classList.remove('win', 'lose')
      guessedLetters = new Set()
      wrongGuesses = 0
      gameStarted = true
@@ -167,9 +169,15 @@ function showMessage(text, isWin) {
 
 function checkGameEnd() {
     if (hasWon()) {
-        showMessage(`You won! The lyrics were: "${currentWord}"`, true)
+        guessButton.textContent = 'You saved them! Play Again?'
+        guessButton.style.display = 'block'
+        guessButton.classList.add('win')
+        gameStarted = false
     } else if (wrongGuesses >= maxGuesses) {
-        showMessage(`Fail! The lyrics were: "${currentWord}"`, false)
+        guessButton.textContent = 'Abducted! Try Again?'
+        guessButton.style.display = 'block'
+        guessButton.classList.add('lose')
+        gameStarted = false
     }
 }
 
