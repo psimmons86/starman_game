@@ -172,10 +172,3 @@ body {
   66% { text-shadow: 2px -2px #5DC8FA, -2px 2px #FF69B4, 4px 4px rgba(255, 215, 0, 0.5); }
   100% { text-shadow: 2px 2px #FF69B4, -2px -2px #FFD700, 4px 4px rgba(93, 200, 250, 0.5); }
 }
-
-@media (max-width: 768px) {
-  .game-container { padding: 0 15px; }
-  .letter-grid { grid-template-columns: repeat(7, 1fr); gap: 3px; }
-  .game-title { font-size: 2.5rem; }
-  .scene-container { height: 250px; }
-}
