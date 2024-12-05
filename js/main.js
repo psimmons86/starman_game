@@ -1,3 +1,4 @@
+/*----- constants -----*/
 const maxGuesses = 6;
 const songLyrics = [
     {
@@ -32,6 +33,7 @@ const songLyrics = [
     }
 ];
 
+/*----- state variables -----*/
 let currentWord = '';
 let guessedLetters = new Set();
 let wrongGuesses = 0;
@@ -40,18 +42,22 @@ let currentSong = null;
 let currentScore = 0;
 let highScore = 0;
 
+/*----- cached elements -----*/
 const letterBoxes = document.querySelectorAll('.letter-box');
 const guessButton = document.getElementById('guessButton');
 const gameImage = document.querySelector('.game-image');
 const songInfoDisplay = document.querySelector('.song-info');
 const hintDisplay = document.querySelector('.hint-display');
 const wordDisplay = document.querySelector('.word-display');
+const backgroundMusic = document.getElementById('backgroundMusic');
 
+/*----- event listeners -----*/
 guessButton.addEventListener('click', init);
 letterBoxes.forEach(box => {
     box.addEventListener('click', () => handleLetterClick(box.textContent, box));
 });
 
+/*----- functions -----*/
 function init() {
     currentSong = songLyrics[Math.floor(Math.random() * songLyrics.length)];
     currentWord = currentSong.lyric;
@@ -59,6 +65,9 @@ function init() {
     wrongGuesses = 0;
     gameStarted = true;
     currentScore = 0;
+    
+    backgroundMusic.volume = 0.3;
+    backgroundMusic.play();
     
     guessButton.textContent = 'Playing...';
     guessButton.classList.remove('win', 'lose');
