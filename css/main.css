@@ -4,13 +4,14 @@
 
 body {
   margin: 0;
-  padding: 20px;
+  padding: 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background-color: rgb(255, 255, 255);
-  font-family: Arial, sans-serif;
+  font-family: 'Electrolize', sans-serif;
   color: rgb(0, 0, 0);
 }
 
@@ -18,21 +19,18 @@ body {
   max-width: 600px;
   width: 100%;
   text-align: center;
-  padding: 10px;
+  padding: 0 20px;
 }
 
 .game-title {
   font-size: 3.5rem;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   letter-spacing: 8px;
-  font-weight: bold;
+  font-weight: 700;
   color: #5DC8FA;
-  text-shadow:
-      2px 2px #FF69B4,
-      -2px -2px #FFD700,
-      4px 4px rgba(93, 200, 250, 0.5);
+  text-shadow: 2px 2px #FF69B4, -2px -2px #FFD700, 4px 4px rgba(93, 200, 250, 0.5);
   animation: psychedelic 3s infinite;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Silkscreen', cursive;
   text-transform: uppercase;
 }
 
@@ -42,7 +40,6 @@ body {
   max-width: 600px;
   margin: 0 auto;
   height: 300px;
-  margin-bottom: 15px;
 }
 
 .game-image {
@@ -54,8 +51,8 @@ body {
   object-fit: contain;
 }
 
-.game-image.background {
-  z-index: 1;
+.game-image.background { 
+  z-index: 1; 
 }
 
 .game-image.person {
@@ -64,40 +61,40 @@ body {
   transition: opacity 0.5s ease;
 }
 
-.game-info {
-  margin: 15px 0;
+.game-info { 
+  margin: 0; 
 }
 
 .word-display {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin: 15px 0;
-  min-height: 40px;
+  margin: 5px 0;
+  min-height: 30px;
 }
 
 .song-info {
   font-size: 1.2rem;
   color: #5DC8FA;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .hint-display {
   background-color: rgba(93, 200, 250, 0.1);
-  padding: 15px;
+  padding: 5px;
   border-radius: 10px;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 .guess-button {
   background-color: #5DC8FA;
   color: white;
   border: none;
-  padding: 12px 35px;
+  padding: 10px 30px;
   font-size: 1.5rem;
   border-radius: 30px;
   cursor: pointer;
-  margin: 10px 0;
+  margin: 5px 0;
   transition: background-color 0.3s;
 }
 
@@ -105,7 +102,7 @@ body {
   display: grid;
   grid-template-columns: repeat(13, 1fr);
   gap: 4px;
-  margin: 15px auto;
+  margin: 5px auto;
   max-width: 600px;
 }
 
@@ -135,63 +132,50 @@ body {
 .message-display {
   font-size: 1.5rem;
   color: #5DC8FA;
-  padding: 15px;
-  margin: 15px 0;
+  padding: 5px;
+  margin: 5px 0;
   border-radius: 10px;
   background-color: rgba(93, 200, 250, 0.1);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
-.message-display.show {
-  opacity: 1;
+.message-display.show { 
+  opacity: 1; 
 }
 
 .guess-button.win {
-    background-color: #44FF44;
-    animation: glow 2s infinite;
+  background-color: #44FF44;
+  animation: glow 2s infinite;
 }
 
 .guess-button.lose {
-    background-color: #FF4444;
-    animation: glow 2s infinite;
+  background-color: #FF4444;
+  animation: glow 2s infinite;
+}
+
+.score-display {
+  font-size: 1.2rem;
+  color: #5DC8FA;
+  margin: 5px 0;
 }
 
 @keyframes glow {
-    0% { box-shadow: 0 0 5px currentColor; }
-    50% { box-shadow: 0 0 20px currentColor; }
-    100% { box-shadow: 0 0 5px currentColor; }
+  0% { box-shadow: 0 0 5px currentColor; }
+  50% { box-shadow: 0 0 20px currentColor; }
+  100% { box-shadow: 0 0 5px currentColor; }
 }
 
 @keyframes psychedelic {
-  0% {
-      text-shadow:
-          2px 2px #FF69B4,
-          -2px -2px #FFD700,
-          4px 4px rgba(93, 200, 250, 0.5);
-  }
-  33% {
-      text-shadow:
-          -2px 2px #FFD700,
-          2px -2px #FF69B4,
-          4px 4px rgba(93, 200, 250, 0.5);
-  }
-  66% {
-      text-shadow:
-          2px -2px #5DC8FA,
-          -2px 2px #FF69B4,
-          4px 4px rgba(255, 215, 0, 0.5);
-  }
-  100% {
-      text-shadow:
-          2px 2px #FF69B4,
-          -2px -2px #FFD700,
-          4px 4px rgba(93, 200, 250, 0.5);
-  }
+  0% { text-shadow: 2px 2px #FF69B4, -2px -2px #FFD700, 4px 4px rgba(93, 200, 250, 0.5); }
+  33% { text-shadow: -2px 2px #FFD700, 2px -2px #FF69B4, 4px 4px rgba(93, 200, 250, 0.5); }
+  66% { text-shadow: 2px -2px #5DC8FA, -2px 2px #FF69B4, 4px 4px rgba(255, 215, 0, 0.5); }
+  100% { text-shadow: 2px 2px #FF69B4, -2px -2px #FFD700, 4px 4px rgba(93, 200, 250, 0.5); }
 }
-.score-display {
-  font-size: 1.2rem
-  color: #5DC8FA
-  margin: 10px 0
-  font-family: 'VT323', monospace
+
+@media (max-width: 768px) {
+  .game-container { padding: 0 15px; }
+  .letter-grid { grid-template-columns: repeat(7, 1fr); gap: 3px; }
+  .game-title { font-size: 2.5rem; }
+  .scene-container { height: 250px; }
 }
