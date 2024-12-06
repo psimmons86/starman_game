@@ -1,6 +1,6 @@
 # Starman - A David Bowie Themed Word Game
 
-![Starman Game Screenshot](https://i.imgur.com/vxxHoT8.png)
+![Game Screenshot](https://i.imgur.com/vxxHoT8.png)
 
 ## Description
 
@@ -9,13 +9,11 @@
 ## Features
 
 - Retro computer terminal design with scan lines and flicker effects
-- Dynamic soundtrack that changes with game state:
-  - Background music during gameplay
-  - Victory music when winning
-  - Dramatic music for losses
+- Dynamic soundtrack that changes with game state
 - Visual feedback with fading stage effects
 - Points system with high score tracking
 - 5 classic David Bowie songs with hints
+- Mobile-responsive design
 
 ## How to Play
 
@@ -31,6 +29,15 @@
 - Custom animations and transitions
 - Google Fonts (Electrolize, Silkscreen)
 
+## Future Improvements
+
+- Additional songs and lyrics
+- Difficulty levels with varied guess limits
+- Keyboard input support
+- Sound effects for letter selection
+- Animation enhancements
+- Achievement system
+
 ## Live Demo
 
-Play the game here: [Starman Game](https://psimmons86.github.io/starman_game/)
+[Play Starman](https://psimmons86.github.io/starman_game/)

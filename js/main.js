@@ -75,6 +75,10 @@ function init() {
    backgroundMusic.volume = 0.3;
    backgroundMusic.currentTime = 0;
    backgroundMusic.play();
+
+   gameImage.style.filter = 'brightness(1)';
+   gameImage.style.transform = 'none';
+   gameImage.style.opacity = '1';
    
    guessButton.textContent = 'Playing...';
    guessButton.classList.remove('win', 'lose');
