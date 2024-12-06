@@ -1,5 +1,7 @@
 # Starman - A David Bowie Themed Word Game
 
+![Starman Game Screenshot](https://i.imgur.com/vxxHoT8.png)
+
 ## Description
 
 "Starman" is a retro-themed word guessing game featuring iconic David Bowie lyrics. Players attempt to save the rockstar by correctly guessing letters in famous song lyrics, all while enjoying a nostalgic computer terminal aesthetic and dynamic music that responds to gameplay.
