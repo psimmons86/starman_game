@@ -10,36 +10,79 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: rgb(255, 255, 255);
-  font-family: 'Electrolize', sans-serif;
-  color: rgb(0, 0, 0);
+  background-color: #000000;
+  font-family: 'Electrolize', monospace;
+  color: #5DC8FA;
 }
 
 .game-container {
-  max-width: 600px;
+  max-width: 800px;
   width: 100%;
   text-align: center;
-  padding: 0 20px;
+  padding: 20px;
+  background-color: #000000;
+  border: 2px solid #5DC8FA;
+  box-shadow: 0 0 20px #5DC8FA, inset 0 0 20px #5DC8FA;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.game-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 50%,
+      #5DC8FA 50%,
+      #5DC8FA 100%
+  );
+  background-size: 4px 1px;
+  animation: scan 8s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes scan {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100vh); }
 }
 
 .game-title {
-  font-size: 3.5rem;
-  margin-bottom: 5px;
+  font-size: 4rem;
+  margin-bottom: 20px;
   letter-spacing: 8px;
   font-weight: 700;
   color: #5DC8FA;
-  text-shadow: 2px 2px #FF69B4, -2px -2px #FFD700, 4px 4px rgba(93, 200, 250, 0.5);
-  animation: psychedelic 3s infinite;
-  font-family: 'Silkscreen', cursive;
   text-transform: uppercase;
+  animation: flicker 2s infinite;
+  text-shadow: 2px 2px #FF69B4, -2px -2px #FFD700, 4px 4px rgba(93, 200, 250, 0.5);
+}
+
+@keyframes flicker {
+  0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+      opacity: 1;
+      text-shadow: 2px 2px #FF69B4, -2px -2px #FFD700, 4px 4px rgba(93, 200, 250, 0.5);
+  }
+  20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+      opacity: 0.4;
+      text-shadow: none;
+  }
 }
 
 .scene-container {
   position: relative;
   width: 100%;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 20px auto;
   height: 300px;
+  border: 1px solid #5DC8FA;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .game-image {
@@ -48,42 +91,43 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
-.game-image.background { 
-  z-index: 1; 
+.letter-grid {
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 5px;
+  margin: 20px auto;
+  max-width: 800px;
 }
 
-.game-image.person {
-  z-index: 2;
-  opacity: 1;
-  transition: opacity 0.5s ease;
-}
-
-.game-info { 
-  margin: 0; 
-}
-
-.word-display {
+.letter-box {
+  background-color: #FF69B4;
+  color: white;
+  border: 1px solid #5DC8FA;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  aspect-ratio: 1;
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 10px;
-  margin: 5px 0;
-  min-height: 30px;
+  transition: all 0.3s ease;
 }
 
-.song-info {
-  font-size: 1.2rem;
-  color: #5DC8FA;
-  margin-bottom: 5px;
+.letter-box:hover {
+  box-shadow: 0 0 10px #5DC8FA;
 }
 
-.hint-display {
-  background-color: rgba(93, 200, 250, 0.1);
-  padding: 5px;
-  border-radius: 10px;
-  margin: 5px 0;
+.letter-box.correct {
+  background-color: #44FF44;
+  color: white;
+}
+
+.letter-box.incorrect {
+  background-color: #FF4444;
+  color: white;
 }
 
 .guess-button {
@@ -94,54 +138,14 @@ body {
   font-size: 1.5rem;
   border-radius: 30px;
   cursor: pointer;
-  margin: 5px 0;
-  transition: background-color 0.3s;
-}
-
-.letter-grid {
-  display: grid;
-  grid-template-columns: repeat(13, 1fr);
-  gap: 4px;
-  margin: 5px auto;
-  max-width: 600px;
-}
-
-.letter-box {
-  background-color: #FF69B4;
-  color: white;
-  padding: 8px;
-  border-radius: 5px;
-  cursor: pointer;
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 20px 0;
+  text-transform: uppercase;
+  font-family: 'Electrolize', monospace;
   transition: all 0.3s ease;
 }
 
-.letter-box.correct {
-  background-color: #44FF44;
-  pointer-events: none;
-}
-
-.letter-box.incorrect {
-  background-color: #FF4444;
-  pointer-events: none;
-}
-
-.message-display {
-  font-size: 1.5rem;
-  color: #5DC8FA;
-  padding: 5px;
-  margin: 5px 0;
-  border-radius: 10px;
-  background-color: rgba(93, 200, 250, 0.1);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.message-display.show { 
-  opacity: 1; 
+.guess-button:hover {
+  box-shadow: 0 0 15px #5DC8FA;
 }
 
 .guess-button.win {
@@ -154,21 +158,34 @@ body {
   animation: glow 2s infinite;
 }
 
-.score-display {
-  font-size: 1.2rem;
-  color: #5DC8FA;
-  margin: 5px 0;
-}
-
 @keyframes glow {
   0% { box-shadow: 0 0 5px currentColor; }
   50% { box-shadow: 0 0 20px currentColor; }
   100% { box-shadow: 0 0 5px currentColor; }
 }
 
-@keyframes psychedelic {
-  0% { text-shadow: 2px 2px #FF69B4, -2px -2px #FFD700, 4px 4px rgba(93, 200, 250, 0.5); }
-  33% { text-shadow: -2px 2px #FFD700, 2px -2px #FF69B4, 4px 4px rgba(93, 200, 250, 0.5); }
-  66% { text-shadow: 2px -2px #5DC8FA, -2px 2px #FF69B4, 4px 4px rgba(255, 215, 0, 0.5); }
-  100% { text-shadow: 2px 2px #FF69B4, -2px -2px #FFD700, 4px 4px rgba(93, 200, 250, 0.5); }
+.score-display, .song-info, .hint-display {
+  color: #5DC8FA;
+  margin: 10px 0;
+  font-size: 1.2rem;
+}
+
+.word-display {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+  font-size: 2rem;
+  letter-spacing: 5px;
+  color: #5DC8FA;
+}
+
+@media (max-width: 768px) {
+  .game-container { padding: 15px; }
+  .letter-grid {
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+  }
+  .game-title { font-size: 2.5rem; }
+  .scene-container { height: 250px; }
 }

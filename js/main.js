@@ -1,5 +1,5 @@
 /*----- constants -----*/
-const maxGuesses = 6;
+const maxGuesses = 4;
 const songLyrics = [
     {
         artist: "David Bowie",
@@ -50,7 +50,8 @@ const songInfoDisplay = document.querySelector('.song-info');
 const hintDisplay = document.querySelector('.hint-display');
 const wordDisplay = document.querySelector('.word-display');
 const backgroundMusic = document.getElementById('backgroundMusic');
-
+const winMusic = document.getElementById('winMusic');
+const loseMusic = document.getElementById('loseMusic');
 /*----- event listeners -----*/
 guessButton.addEventListener('click', init);
 letterBoxes.forEach(box => {
@@ -66,7 +67,12 @@ function init() {
     gameStarted = true;
     currentScore = 0;
     
+    winMusic.pause();
+    winMusic.currentTime = 0;
+    loseMusic.pause();
+    loseMusic.currentTime = 0;
     backgroundMusic.volume = 0.3;
+    backgroundMusic.currentTime = 0;
     backgroundMusic.play();
     
     guessButton.textContent = 'Playing...';
@@ -141,10 +147,16 @@ function checkGameEnd() {
         guessButton.textContent = 'You saved them! Play Again?';
         guessButton.classList.add('win');
         gameStarted = false;
+        backgroundMusic.pause();
+        winMusic.volume = 0.3;
+        winMusic.play();
     } else if (wrongGuesses >= maxGuesses) {
         guessButton.textContent = 'They were abducted! Try Again?';
         guessButton.classList.add('lose');
         gameStarted = false;
+        backgroundMusic.pause();
+        loseMusic.volume = 0.3;
+        loseMusic.play();
     }
 }
 
